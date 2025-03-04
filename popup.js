@@ -1,5 +1,5 @@
-document.getElementById('detectButton').addEventListener('click', () => {
-  chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+document.getElementById('detectButton').addEventListener('click', function() {
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       chrome.scripting.executeScript({
           target: {tabId: tabs[0].id},
           files: ['content.js']
