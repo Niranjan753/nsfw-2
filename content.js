@@ -1,7 +1,13 @@
-const explicitKeywords = ["explicit", "nsfw", "adult"]; // Add more keywords as needed
+const explicitKeywords = ["explicit", "nsfw", "adult", "18+", "porn"]; // Added new keywords
 
 function isExplicitImage(src) {
-    return explicitKeywords.some(keyword => src.includes(keyword));
+    // Check if the image source contains any of the explicit keywords
+    return explicitKeywords.some(keyword => src.toLowerCase().includes(keyword.toLowerCase()));
+}
+
+function isExplicitText(text) {
+    // Check if the text content contains any of the explicit keywords
+    return explicitKeywords.some(keyword => text.toLowerCase().includes(keyword.toLowerCase()));
 }
 
 const images = document.getElementsByTagName('img');
@@ -25,14 +31,16 @@ for (let img of images) {
     console.log(`Processing Image: ${img.src}`); // Log all images being processed
     if (isExplicitImage(img.src)) {
         detectedImages.push(img);
-        // Create a red overlay for detected NSFW images
+        console.log("Explicit content detected in image source"); // Log explicit content detection
+        
+        // Create a blur overlay for detected explicit images
         const overlay = document.createElement('div');
         overlay.style.position = 'absolute';
         overlay.style.top = img.offsetTop + 'px';
         overlay.style.left = img.offsetLeft + 'px';
         overlay.style.width = img.offsetWidth + 'px';
         overlay.style.height = img.offsetHeight + 'px';
-        overlay.style.backgroundColor = 'rgba(255, 0, 0, 0.5)'; // Red with transparency for NSFW
+        overlay.style.backdropFilter = 'blur(5px)'; // Blur effect
         overlay.style.zIndex = '9999'; // Ensure it's on top
         document.body.appendChild(overlay);
         
@@ -43,11 +51,35 @@ for (let img of images) {
     }
 }
 
+// Check the text content of the page for explicit keywords
+const bodyText = document.body.innerText;
+if (isExplicitText(bodyText)) {
+    console.log("Explicit content detected in text"); // Log explicit content detection in text
+    
+    // Create a blur overlay for explicit content in text
+    const textOverlay = document.createElement('div');
+    textOverlay.style.position = 'fixed';
+    textOverlay.style.top = '0';
+    textOverlay.style.left = '0';
+    textOverlay.style.width = '100%';
+    textOverlay.style.height = '100%';
+    textOverlay.style.backdropFilter = 'blur(5px)'; // Blur effect
+    textOverlay.style.zIndex = '9999'; // Ensure it's on top
+    textOverlay.style.display = 'flex';
+    textOverlay.style.alignItems = 'center';
+    textOverlay.style.justifyContent = 'center';
+    textOverlay.style.fontSize = '24px';
+    textOverlay.style.color = 'red'; // Red text color
+    textOverlay.innerText = 'Explicit Content Detected'; // Message to display
+    document.body.appendChild(textOverlay);
+}
+
 // If no NSFW images were detected, log a message and show a safe content overlay after a delay
-if (detectedImages.length === 0) {
+if (detectedImages.length === 0 && !isExplicitText(bodyText)) {
     console.log("No NSFW images detected.");
     
     // Set a timeout to show the safe content overlay after 3 seconds
+    /*
     setTimeout(() => {
         // Create a green overlay indicating safe content
         const safeOverlay = document.createElement('div');
@@ -63,7 +95,8 @@ if (detectedImages.length === 0) {
         safeOverlay.style.justifyContent = 'center';
         safeOverlay.style.fontSize = '24px';
         safeOverlay.style.color = 'white';
-        safeOverlay.innerText = 'Content is Safe'; // Message to display
+        safeOverlay.style.innerText = 'Content is Safe'; // Message to display
+        document.body.appendChild(safeOverlay);
         
         // Create a "Done" button
         const doneButton = document.createElement('button');
@@ -83,7 +116,6 @@ if (detectedImages.length === 0) {
         doneButton.addEventListener('click', () => {
             document.body.removeChild(safeOverlay); // Remove the overlay
         });
-
-        document.body.appendChild(safeOverlay);
     }, 3000); // 3000 milliseconds = 3 seconds
+    */
 }
