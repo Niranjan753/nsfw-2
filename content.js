@@ -119,3 +119,13 @@ if (detectedImages.length === 0 && !isExplicitText(bodyText)) {
     }, 3000); // 3000 milliseconds = 3 seconds
     */
 }
+
+function logImages() {
+    const images = document.querySelectorAll('img'); // Select all images on the page
+    images.forEach((img) => {
+        console.log(img.src); // Log the image source to the console
+    });
+}
+
+// Call logImages every 3 seconds
+setInterval(logImages, 3000);
