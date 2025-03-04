@@ -25,14 +25,14 @@ for (let img of images) {
     console.log(`Processing Image: ${img.src}`); // Log all images being processed
     if (isExplicitImage(img.src)) {
         detectedImages.push(img);
-        // Create a green overlay
+        // Create a red overlay for detected NSFW images
         const overlay = document.createElement('div');
         overlay.style.position = 'absolute';
         overlay.style.top = img.offsetTop + 'px';
         overlay.style.left = img.offsetLeft + 'px';
         overlay.style.width = img.offsetWidth + 'px';
         overlay.style.height = img.offsetHeight + 'px';
-        overlay.style.backgroundColor = 'rgba(0, 255, 0, 0.5)'; // Green with transparency
+        overlay.style.backgroundColor = 'rgba(255, 0, 0, 0.5)'; // Red with transparency for NSFW
         overlay.style.zIndex = '9999'; // Ensure it's on top
         document.body.appendChild(overlay);
         
@@ -43,7 +43,27 @@ for (let img of images) {
     }
 }
 
-// If no NSFW images were detected, log a message
+// If no NSFW images were detected, log a message and show a safe content overlay after a delay
 if (detectedImages.length === 0) {
     console.log("No NSFW images detected.");
+    
+    // Set a timeout to show the safe content overlay after 3 seconds
+    setTimeout(() => {
+        // Create a green overlay indicating safe content
+        const safeOverlay = document.createElement('div');
+        safeOverlay.style.position = 'fixed';
+        safeOverlay.style.top = '0';
+        safeOverlay.style.left = '0';
+        safeOverlay.style.width = '100%';
+        safeOverlay.style.height = '100%';
+        safeOverlay.style.backgroundColor = 'rgba(0, 255, 0, 0.5)'; // Green with transparency
+        safeOverlay.style.zIndex = '9999'; // Ensure it's on top
+        safeOverlay.style.display = 'flex';
+        safeOverlay.style.alignItems = 'center';
+        safeOverlay.style.justifyContent = 'center';
+        safeOverlay.style.fontSize = '24px';
+        safeOverlay.style.color = 'white';
+        safeOverlay.innerText = 'Content is Safe'; // Message to display
+        document.body.appendChild(safeOverlay);
+    }, 3000); // 3000 milliseconds = 3 seconds
 }
