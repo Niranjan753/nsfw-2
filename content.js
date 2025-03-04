@@ -1,4 +1,23 @@
-const explicitKeywords = ["explicit", "nsfw", "adult", "18+", "porn"]; // Added new keywords
+// ... existing code ...
+const explicitKeywords = [
+    "explicit", 
+    "nsfw", 
+    "adult", 
+    "18+", 
+    "porn", 
+    "hot",
+    "sex", 
+    "nude", 
+    "xxx", 
+    "erotic", 
+    "fetish", 
+    "strip", 
+    "swinger", 
+    "hookup", 
+    "escort", 
+    "cheating", 
+    "kinky"
+];
 
 function isExplicitImage(src) {
     // Check if the image source contains any of the explicit keywords
