@@ -64,6 +64,26 @@ if (detectedImages.length === 0) {
         safeOverlay.style.fontSize = '24px';
         safeOverlay.style.color = 'white';
         safeOverlay.innerText = 'Content is Safe'; // Message to display
+        
+        // Create a "Done" button
+        const doneButton = document.createElement('button');
+        doneButton.innerText = 'Done';
+        doneButton.style.marginTop = '20px';
+        doneButton.style.padding = '10px 20px';
+        doneButton.style.fontSize = '16px';
+        doneButton.style.color = 'white';
+        doneButton.style.backgroundColor = '#007BFF'; // Blue color
+        doneButton.style.border = 'none';
+        doneButton.style.borderRadius = '5px';
+        doneButton.style.cursor = 'pointer';
+        doneButton.style.zIndex = '10000'; // Ensure it's on top of the overlay
+        safeOverlay.appendChild(doneButton);
+        
+        // Add click event to the "Done" button
+        doneButton.addEventListener('click', () => {
+            document.body.removeChild(safeOverlay); // Remove the overlay
+        });
+
         document.body.appendChild(safeOverlay);
     }, 3000); // 3000 milliseconds = 3 seconds
 }
