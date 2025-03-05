@@ -1,5 +1,5 @@
 // content.js
-const explicitKeywords = ["explicit", "nsfw", "adult", "18+", "porn"]; // Added new keywords
+const explicitKeywords = ["sex", "xxx", "adult content", "nude", "erotic", "fetish", "pornography"]; // Updated keywords
 
 function isExplicitImage(src) {
     // Check if the image source contains any of the explicit keywords
